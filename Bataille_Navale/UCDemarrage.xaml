@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="Bataille_Navale.UCDemarrage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Bataille_Navale"
+             mc:Ignorable="d" 
+             d:DesignHeight="900" d:DesignWidth="1600">
+    <Grid>
+        <Button x:Name="butJouer_Solo" Content="Mode 1 joueur" HorizontalAlignment="Left" Margin="300,608,0,0" VerticalAlignment="Top" Height="76" Width="300" FontSize="40"/>
+        <Button Content="Mode 2 joueur" HorizontalAlignment="Left" Margin="1000,608,0,0" VerticalAlignment="Top" Height="76" Width="300" FontSize="40"/>
+        <Button Content="Règles" HorizontalAlignment="Center" Height="76" Margin="0,730,0,0" VerticalAlignment="Top" Width="300" FontSize="40"/>
+
+    </Grid>
+</UserControl>
