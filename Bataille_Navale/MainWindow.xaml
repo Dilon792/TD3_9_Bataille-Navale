@@ -7,5 +7,8 @@
         mc:Ignorable="d"
         Title="Fenetre_depart" Height="900" Width="1600">
     <ContentControl x:Name="ZoneJeu" />
+    <Window.Background>
+        <ImageBrush ImageSource="/1000_F_443693248_FFOUon01HIYUVLVPFIyhrzDlbmWN8XKq.jpg" Stretch="UniformToFill"/>
+    </Window.Background>
 </Window>
 
