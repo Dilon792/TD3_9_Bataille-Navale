@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bataille_Navale"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+        Title="MainWindow" Height="1080" Width="1920">
+    <Window.Background>
+        <ImageBrush ImageSource="/1000_F_443693248_FFOUon01HIYUVLVPFIyhrzDlbmWN8XKq.jpg"/>
+    </Window.Background>
 </Window>
