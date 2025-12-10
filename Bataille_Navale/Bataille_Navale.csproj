@@ -10,10 +10,19 @@
 
   <ItemGroup>
     <None Remove="1000_F_443693248_FFOUon01HIYUVLVPFIyhrzDlbmWN8XKq.jpg" />
+    <None Remove="images\03ad941d-ddc4-465a-9a38-045d94c93422.png" />
+    <None Remove="images\1000_F_443693248_FFOUon01HIYUVLVPFIyhrzDlbmWN8XKq.jpg" />
+    <None Remove="images\66398065-5fd7-40bc-8f7f-b46fd6e77522.png" />
+    <None Remove="images\Gemini_Generated_Image_1klvni1klvni1klv.png" />
+    <None Remove="images\Gemini_Generated_Image_vwqgxqvwqgxqvwqg.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="1000_F_443693248_FFOUon01HIYUVLVPFIyhrzDlbmWN8XKq.jpg" />
+    <Resource Include="images\03ad941d-ddc4-465a-9a38-045d94c93422.png" />
+    <Resource Include="images\1000_F_443693248_FFOUon01HIYUVLVPFIyhrzDlbmWN8XKq.jpg" />
+    <Resource Include="images\66398065-5fd7-40bc-8f7f-b46fd6e77522.png" />
+    <Resource Include="images\Gemini_Generated_Image_1klvni1klvni1klv.png" />
+    <Resource Include="images\Gemini_Generated_Image_vwqgxqvwqgxqvwqg.png" />
   </ItemGroup>
 
 </Project>

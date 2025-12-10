@@ -6,10 +6,10 @@
              xmlns:local="clr-namespace:Bataille_Navale"
              mc:Ignorable="d" 
              d:DesignHeight="900" d:DesignWidth="1600">
-    <Grid>
+    <Grid x:Name="ZoneJeu">
         <Button x:Name="butJouer_Solo" Content="Mode 1 joueur" HorizontalAlignment="Left" Margin="300,608,0,0" VerticalAlignment="Top" Height="76" Width="300" FontSize="40"/>
-        <Button Content="Mode 2 joueur" HorizontalAlignment="Left" Margin="1000,608,0,0" VerticalAlignment="Top" Height="76" Width="300" FontSize="40"/>
-        <Button Content="Règles" HorizontalAlignment="Center" Height="76" Margin="0,730,0,0" VerticalAlignment="Top" Width="300" FontSize="40"/>
+        <Button x:Name="butJouer_Duo" Content="Mode 2 joueur" HorizontalAlignment="Left" Margin="1000,608,0,0" VerticalAlignment="Top" Height="76" Width="300" FontSize="40"/>
+        <Button x:Name="butRegles" Content="Règles" HorizontalAlignment="Center" Height="76" Margin="0,730,0,0" VerticalAlignment="Top" Width="300" FontSize="40"/>
 
     </Grid>
 </UserControl>
