@@ -35,7 +35,7 @@ namespace Bataille_Navale
         {
             UCJoueur1 uc = new UCJoueur1();
             ZoneJeu.Content = uc;
-            this.Background = new ImageBrush(new BitmapImage(new Uri("P:\\SAE1.01 + SAE1.02\\10_12_2025\\Bataille_Navale\\images\\66398065-5fd7-40bc-8f7f-b46fd6e77522.png")));
+            this.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/fond_jeu.png")));
         }
     }
 }
