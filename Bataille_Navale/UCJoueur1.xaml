@@ -7,7 +7,12 @@
              mc:Ignorable="d" 
              Height="900" Width="1600">
     <Grid x:Name="Grille">
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Name="ColonneAttaque" Width="800*"/>
+            <ColumnDefinition x:Name="ColonneDefense" Width="800*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="1"/>
+
     </Grid>
 
 </UserControl>

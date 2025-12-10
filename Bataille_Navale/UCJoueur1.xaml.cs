@@ -32,14 +32,15 @@ namespace Bataille_Navale
             for (int i = 0; i < lesBoutons.Length; i++)
             {
                 lesBoutons[i] = new Button();
+                lesBoutons[i].Content = new ImageBrush(new BitmapImage(new Uri("C:\\Users\\noahr\\Documents\\Noah\\Sae1.01\\Bataille_Navale\\images\\carreaux_normal.png")));
                 lesBoutons[i].Width = 50;
                 lesBoutons[i].Height = 50;
                 lesBoutons[i].VerticalAlignment = VerticalAlignment.Top;
                 lesBoutons[i].HorizontalAlignment = HorizontalAlignment.Left;
                 lesBoutons[i].Margin = new Thickness(lesBoutons[i].Height * (i % 9), lesBoutons[i].Width * (i / 9), 0, 0);
                 this.Grille.Children.Add(lesBoutons[i]);
-                Grid.SetColumn(lesBoutons[i], 1);
-                // ici il est placé dans la 2eme colonne da ma grille
+                Grid.SetColumn(lesBoutons[i], 0);
+                // ici il est placé dans la 1ere colonne da ma grille
                 lesBoutons[i].Click += this.UnBouton_Click;
             }
         }
