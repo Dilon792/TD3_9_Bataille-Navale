@@ -10,10 +10,33 @@
 
   <ItemGroup>
     <None Remove="1000_F_443693248_FFOUon01HIYUVLVPFIyhrzDlbmWN8XKq.jpg" />
+    <None Remove="But_1J.png" />
+    <None Remove="But_2J.png" />
+    <None Remove="Fond_Ecran_Accueil.png" />
+    <None Remove="images\But_1J.png" />
+    <None Remove="images\But_2J.png" />
+    <None Remove="images\But_Regle.png" />
+    <None Remove="images\carreaux_détruit.png" />
+    <None Remove="images\carreaux_normal.png" />
+    <None Remove="images\carreaux_raté.png" />
+    <None Remove="images\carreaux_toucher.png" />
+    <None Remove="images\Fond_Ecran_Accueil.png" />
+    <None Remove="images\fond_jeu.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="1000_F_443693248_FFOUon01HIYUVLVPFIyhrzDlbmWN8XKq.jpg" />
+    <Resource Include="But_1J.png" />
+    <Resource Include="But_2J.png" />
+    <Resource Include="Fond_Ecran_Accueil.png" />
+    <Resource Include="images\But_1J.png" />
+    <Resource Include="images\But_2J.png" />
+    <Resource Include="images\But_Regle.png" />
+    <Resource Include="images\carreaux_détruit.png" />
+    <Resource Include="images\carreaux_normal.png" />
+    <Resource Include="images\carreaux_raté.png" />
+    <Resource Include="images\carreaux_toucher.png" />
+    <Resource Include="images\Fond_Ecran_Accueil.png" />
+    <Resource Include="images\fond_jeu.png" />
   </ItemGroup>
 
 </Project>

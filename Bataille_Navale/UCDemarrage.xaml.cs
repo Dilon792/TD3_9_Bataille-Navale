@@ -24,5 +24,6 @@ namespace Bataille_Navale
         {
             InitializeComponent();
         }
+
     }
 }

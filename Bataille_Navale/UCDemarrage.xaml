@@ -7,8 +7,16 @@
              mc:Ignorable="d" 
              d:DesignHeight="900" d:DesignWidth="1600">
     <Grid>
-        <Button x:Name="butJouer_Solo" Content="Mode 1 joueur" HorizontalAlignment="Left" Margin="300,608,0,0" VerticalAlignment="Top" Height="76" Width="300" FontSize="40"/>
-        <Button Content="Mode 2 joueur" HorizontalAlignment="Left" Margin="1000,608,0,0" VerticalAlignment="Top" Height="76" Width="300" FontSize="40"/>
+        <Button x:Name="butJouer_Solo" Content="" HorizontalAlignment="Left" Margin="214,544,0,0" VerticalAlignment="Top" Height="140" Width="440" FontSize="40">
+            <Button.Background>
+                <ImageBrush ImageSource="images/But_1J.png"/>
+            </Button.Background>
+        </Button>
+        <Button Content="Mode 2 joueur" HorizontalAlignment="Left" Margin="982,544,0,0" VerticalAlignment="Top" Height="140" Width="440" FontSize="40">
+            <Button.Background>
+                <ImageBrush Stretch="Fill" ImageSource="images/But_2J.png"/>
+            </Button.Background>
+        </Button>
         <Button Content="Règles" HorizontalAlignment="Center" Height="76" Margin="0,730,0,0" VerticalAlignment="Top" Width="300" FontSize="40"/>
 
     </Grid>
