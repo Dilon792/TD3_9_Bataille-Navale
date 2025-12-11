@@ -32,7 +32,7 @@ namespace Bataille_Navale
             for (int i = 0; i < lesBoutons.Length; i++)
             {
                 lesBoutons[i] = new Button();
-                lesBoutons[i].Content = new ImageBrush(new BitmapImage(new Uri("C:\\Users\\noahr\\Documents\\Noah\\Sae1.01\\Bataille_Navale\\images\\carreaux_normal.png")));
+                lesBoutons[i].Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/carreaux_normal.png", UriKind.Absolute)));
                 lesBoutons[i].Width = 50;
                 lesBoutons[i].Height = 50;
                 lesBoutons[i].VerticalAlignment = VerticalAlignment.Top;
