@@ -66,13 +66,23 @@ namespace Bataille_Navale
         }
 
        private void UnBouton_Click(object sender, RoutedEventArgs e)
-        {
+       {
             Button bouton = ((Button)sender);
+            Verif_Bateau(bouton);
+            
+       }
+
+        private void Verif_Bateau(Button bouton)
+        {
             if (bouton.Tag is 0)
             {
                 bouton.Background = new ImageBrush(new BitmapImage(new Uri("P:\\SAE1.01 + SAE1.02\\11_12_2025\\Bataille_Navale\\images\\carreaux_raté.png")));
             }
-            
+            else if (bouton.Tag is 1)
+            {
+                bouton.Background = new ImageBrush(new BitmapImage(new Uri("P:\\SAE1.01 + SAE1.02\\11_12_2025\\Bataille_Navale\\images\\carreaux_toucher.png")));
+            }
+        }
         }
     }
 }
