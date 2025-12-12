@@ -20,10 +20,12 @@ namespace Bataille_Navale
     /// </summary>
     public partial class UCJoueur2 : UserControl
     {
+        bool nbTirJoueur2 = false;
         public Button[] lesBoutonsAtt = new Button[81];
         public Button[] lesBoutonsDef = new Button[81];
         public UCJoueur2()
         {
+            nbTirJoueur2 = false;
             InitializeComponent();
             InitialiseGrilleAttaque();
             InitialiseGrilleDefense();
@@ -67,9 +69,25 @@ namespace Bataille_Navale
         private void UnBouton_Click(object sender, RoutedEventArgs e)
         {
             Button bouton = ((Button)sender);
-            Verif_Bateau(bouton);
+            if (bouton.Tag is not 0 && bouton.Tag is not 1)
+            {
+                labReponse.Content = "Veuiller saisir une case pas utilisée.";
+            }
+            else if (nbTirJoueur2 == true)
+            {
+                labReponse.Content = "Vous avez déjà joué. Appuyer sur Suivant.";
+            }
+            else
+            {
+                labReponse.Content = "";
+                Verif_Bateau(bouton);
+                nbTirJoueur2 = true;
+                butSuivant.Opacity = 1;
+                butSuivant.IsEnabled = true;
+            }
 
         }
+
 
         private void Verif_Bateau(Button bouton)
         {

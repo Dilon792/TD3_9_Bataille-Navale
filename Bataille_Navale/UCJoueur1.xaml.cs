@@ -26,6 +26,7 @@ namespace Bataille_Navale
         public Button[] lesBoutonsDef = new Button[81];
         public UCJoueur1()
         {
+            nbTirJoueur1 = false;
             InitializeComponent();
             InitialiseGrilleAttaque();
             InitialiseGrilleDefense();

@@ -17,7 +17,11 @@ namespace Bataille_Navale
     /// </summary>
     public partial class MainWindow : Window
     {
+        UCJoueur2 ucJoueur2 = new UCJoueur2();
+        UCTransition ucTransition = new UCTransition();
+        UCJoueur1 ucJoueur1 = new UCJoueur1();
         public int nbTour = 1;
+        UCDemarrage ucDemarrage = new UCDemarrage();
         public MainWindow()
         {
             InitializeComponent();
@@ -25,18 +29,38 @@ namespace Bataille_Navale
         }
         public void AffichageDemarrage()
         {
-            UCDemarrage uc = new UCDemarrage();
+            
 
             // associe l'écran au conteneur
-            ZoneJeu.Content = uc;
-            uc.butJouer_Solo.Click += AfficherJoueur1;
+            ZoneJeu.Content = ucDemarrage;
+            ucDemarrage.butJouer_Solo.Click += AfficherJoueur1;
         }
 
         private void AfficherJoueur1(object sender, RoutedEventArgs e)
         {
-            UCJoueur1 uc = new UCJoueur1();
-            ZoneJeu.Content = uc;
+            nbTour += 1;
+            
+            ZoneJeu.Content = ucJoueur1;
             this.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/fond_jeu.png")));
+            ucJoueur1.butSuivant.Click += AfficherTransition;
+        }
+
+        private void AfficherTransition(object sender, RoutedEventArgs e)
+        {
+            
+            ZoneJeu.Content = ucTransition;
+            if (nbTour%2 == 0)
+                ucTransition.butSuivantTransition.Click += AfficherJoueur2;
+            else
+                ucTransition.butSuivantTransition.Click += AfficherJoueur1;
+        }
+
+        private void AfficherJoueur2(object sender, RoutedEventArgs e)
+        {
+            nbTour += 1;
+            
+            ZoneJeu.Content = ucJoueur2;
+            ucJoueur2.butSuivant.Click += AfficherTransition;
         }
     }
 }
