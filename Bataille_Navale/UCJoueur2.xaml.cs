@@ -12,18 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Bataille_Navale
 {
     /// <summary>
-    /// Logique d'interaction pour UCJoueur1.xaml
+    /// Logique d'interaction pour UCJoueur2.xaml
     /// </summary>
-    public partial class UCJoueur1 : UserControl
+    public partial class UCJoueur2 : UserControl
     {
         public Button[] lesBoutonsAtt = new Button[81];
         public Button[] lesBoutonsDef = new Button[81];
-        public UCJoueur1()
+        public UCJoueur2()
         {
             InitializeComponent();
             InitialiseGrilleAttaque();
@@ -40,9 +39,9 @@ namespace Bataille_Navale
                 lesBoutonsAtt[i].VerticalAlignment = VerticalAlignment.Top;
                 lesBoutonsAtt[i].HorizontalAlignment = HorizontalAlignment.Left;
                 lesBoutonsAtt[i].Margin = new Thickness(lesBoutonsAtt[i].Height * (i % 9), lesBoutonsAtt[i].Width * (i / 9), 0, 0);
-                this.GrilleJoueur1.Children.Add(lesBoutonsAtt[i]);
+                this.GrilleJoueur2.Children.Add(lesBoutonsAtt[i]);
                 lesBoutonsAtt[i].Tag = 0;
-                Grid.SetColumn(lesBoutonsAtt[i], 1);
+                Grid.SetColumn(lesBoutonsAtt[i], 0);
                 // ici il est placé dans la 1ere colonne da ma grille
                 lesBoutonsAtt[i].Click += this.UnBouton_Click;
             }
@@ -58,26 +57,19 @@ namespace Bataille_Navale
                 lesBoutonsDef[i].VerticalAlignment = VerticalAlignment.Top;
                 lesBoutonsDef[i].HorizontalAlignment = HorizontalAlignment.Left;
                 lesBoutonsDef[i].Margin = new Thickness(lesBoutonsDef[i].Height * (i % 9), lesBoutonsDef[i].Width * (i / 9), 0, 0);
-                this.GrilleJoueur1.Children.Add(lesBoutonsDef[i]);
+                this.GrilleJoueur2.Children.Add(lesBoutonsDef[i]);
                 lesBoutonsDef[i].Tag = 0;
-                Grid.SetColumn(lesBoutonsDef[i], 0);
+                Grid.SetColumn(lesBoutonsDef[i], 1);
                 // ici il est placé dans la 2eme colonne da ma grille
             }
         }
 
-       private void UnBouton_Click(object sender, RoutedEventArgs e)
-       {
-            for (int i = 0; i< lesBoutonsAtt.Length; i++)
-            {
-                if (lesBoutonsAtt[i].Tag is not 0 && lesBoutonsAtt[i].Tag is not 0)
-                {
-                    labReponse.Content = "Veuiller saisir une case pas utiliser." ;
-                }
-            }
+        private void UnBouton_Click(object sender, RoutedEventArgs e)
+        {
             Button bouton = ((Button)sender);
             Verif_Bateau(bouton);
-            
-       }
+
+        }
 
         private void Verif_Bateau(Button bouton)
         {
@@ -90,6 +82,5 @@ namespace Bataille_Navale
                 bouton.Background = new ImageBrush(new BitmapImage(new Uri("P:\\SAE1.01 + SAE1.02\\11_12_2025\\Bataille_Navale\\images\\carreaux_toucher.png")));
             }
         }
-        
     }
 }

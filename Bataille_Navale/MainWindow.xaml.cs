@@ -17,6 +17,7 @@ namespace Bataille_Navale
     /// </summary>
     public partial class MainWindow : Window
     {
+        public int nbTour = 1;
         public MainWindow()
         {
             InitializeComponent();
