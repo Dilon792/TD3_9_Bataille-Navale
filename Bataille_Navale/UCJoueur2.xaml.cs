@@ -75,11 +75,11 @@ namespace Bataille_Navale
         {
             if (bouton.Tag is 0)
             {
-                bouton.Background = new ImageBrush(new BitmapImage(new Uri("P:\\SAE1.01 + SAE1.02\\11_12_2025\\Bataille_Navale\\images\\carreaux_raté.png")));
+                bouton.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/carreaux_raté.png", UriKind.Absolute)));
             }
             else if (bouton.Tag is 1)
             {
-                bouton.Background = new ImageBrush(new BitmapImage(new Uri("P:\\SAE1.01 + SAE1.02\\11_12_2025\\Bataille_Navale\\images\\carreaux_toucher.png")));
+                bouton.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/carreaux_toucher.png", UriKind.Absolute)));
             }
         }
     }

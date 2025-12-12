@@ -21,6 +21,7 @@ namespace Bataille_Navale
     /// </summary>
     public partial class UCJoueur1 : UserControl
     {
+        bool nbTirJoueur1 = false;
         public Button[] lesBoutonsAtt = new Button[81];
         public Button[] lesBoutonsDef = new Button[81];
         public UCJoueur1()
@@ -67,15 +68,25 @@ namespace Bataille_Navale
 
        private void UnBouton_Click(object sender, RoutedEventArgs e)
        {
-            for (int i = 0; i< lesBoutonsAtt.Length; i++)
-            {
-                if (lesBoutonsAtt[i].Tag is not 0 && lesBoutonsAtt[i].Tag is not 0)
-                {
-                    labReponse.Content = "Veuiller saisir une case pas utiliser." ;
-                }
-            }
+            
             Button bouton = ((Button)sender);
-            Verif_Bateau(bouton);
+            if (bouton.Tag is not 0 && bouton.Tag is not 1)
+            {
+                labReponse.Content = "Veuiller saisir une case pas utilisée.";
+            }
+            else if (nbTirJoueur1 == true)
+            {
+                labReponse.Content = "Vous avez déjà joué. Appuyer sur Suivant.";
+            }
+            else
+            {
+                labReponse.Content = "";
+                Verif_Bateau(bouton);
+                nbTirJoueur1 = true;
+                butSuivant.Opacity = 1;
+                butSuivant.IsEnabled = true;
+            }
+            
             
        }
 
@@ -83,11 +94,13 @@ namespace Bataille_Navale
         {
             if (bouton.Tag is 0)
             {
-                bouton.Background = new ImageBrush(new BitmapImage(new Uri("P:\\SAE1.01 + SAE1.02\\11_12_2025\\Bataille_Navale\\images\\carreaux_raté.png")));
+                bouton.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/carreaux_raté.png", UriKind.Absolute)));
+                bouton.Tag = 2;
             }
             else if (bouton.Tag is 1)
             {
-                bouton.Background = new ImageBrush(new BitmapImage(new Uri("P:\\SAE1.01 + SAE1.02\\11_12_2025\\Bataille_Navale\\images\\carreaux_toucher.png")));
+                bouton.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/carreaux_toucher.png", UriKind.Absolute)));
+                bouton.Tag = 3;
             }
         }
         

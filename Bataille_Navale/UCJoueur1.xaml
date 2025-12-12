@@ -7,7 +7,8 @@
              mc:Ignorable="d" 
              Height="900" Width="1600">
     <Grid x:Name="GrilleJoueur1" Margin="200,237,0,0">
-        <Label x:Name="labReponse" Content="" HorizontalAlignment="Left" Margin="500,563,0,0" VerticalAlignment="Top" Width="200" Height="90" FontSize="36" HorizontalContentAlignment="Center"/>
+        <Label x:Name="labReponse" Content="" HorizontalAlignment="Left" Margin="250,570,0,0" VerticalAlignment="Top" Width="700" Height="83" FontSize="36" HorizontalContentAlignment="Center" Grid.ColumnSpan="2" Foreground="White"/>
+        <Button x:Name="butSuivant" Grid.Column="1" Content="Suivant" HorizontalAlignment="Left" Margin="390,562,0,0" VerticalAlignment="Top" Height="90" Width="300" IsEnabled="False" Opacity="0"/>
         <Grid.ColumnDefinitions>
             <ColumnDefinition x:Name="ColonneAttaque" Width="800*"/>
             <ColumnDefinition x:Name="ColonneDefense" Width="800*"/>
