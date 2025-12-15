@@ -43,7 +43,11 @@ namespace Bataille_Navale
             ZoneJeu.Content = ucJoueur1;
             this.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/fond_jeu.png")));
             ucJoueur1.butSuivant.Click += AfficherTransition;
-            
+            if (nbTour >= 4)
+            {
+                ucJoueur1.ActiverModeAttaque();
+            }
+
         }
 
         private void AfficherTransition(object sender, RoutedEventArgs e)
@@ -65,7 +69,13 @@ namespace Bataille_Navale
             Console.WriteLine(nbTour);
             ZoneJeu.Content = ucJoueur2;
             ucJoueur2.butSuivant.Click += AfficherTransition;
-            
+            if (nbTour == 3)
+                ucJoueur2.DemarrerPlacementJoueur2();
+            else if (nbTour >= 5)
+            {
+                ucJoueur2.ActiverModeAttaque();
+            }
+
         }
     }
 }

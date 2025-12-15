@@ -22,6 +22,7 @@
     <None Remove="images\carreaux_toucher.png" />
     <None Remove="images\Fond_Ecran_Accueil.png" />
     <None Remove="images\fond_jeu.png" />
+    <None Remove="images\tempoBateau.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,6 +38,7 @@
     <Resource Include="images\carreaux_toucher.png" />
     <Resource Include="images\Fond_Ecran_Accueil.png" />
     <Resource Include="images\fond_jeu.png" />
+    <Resource Include="images\tempoBateau.jpg" />
   </ItemGroup>
 
 </Project>
