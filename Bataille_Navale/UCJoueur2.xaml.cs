@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static Bataille_Navale.UCJoueur2;
 
 namespace Bataille_Navale
 {
@@ -20,48 +21,49 @@ namespace Bataille_Navale
     /// </summary>
     public partial class UCJoueur2 : UserControl
     {
-        bool nbTirJoueur2 = false;
-        public Button[] lesBoutonsAtt = new Button[81];
-        public Button[] lesBoutonsDef = new Button[81];
+        public static Button[] lesBoutonsAttJoueur2 { get; set; } = new Button[81];
+        public static Button[] lesBoutonsDefJoueur2 { get; set; } = new Button[81];
         public UCJoueur2()
         {
-            nbTirJoueur2 = false;
             InitializeComponent();
             InitialiseGrilleAttaque();
             InitialiseGrilleDefense();
         }
         public void InitialiseGrilleAttaque()
         {
-            for (int i = 0; i < lesBoutonsAtt.Length; i++)
+            for (int i = 0; i < lesBoutonsAttJoueur2.Length; i++)
             {
-                lesBoutonsAtt[i] = new Button();
-                lesBoutonsAtt[i].Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/carreaux_normal.png", UriKind.Absolute)));
-                lesBoutonsAtt[i].Width = 50;
-                lesBoutonsAtt[i].Height = 50;
-                lesBoutonsAtt[i].VerticalAlignment = VerticalAlignment.Top;
-                lesBoutonsAtt[i].HorizontalAlignment = HorizontalAlignment.Left;
-                lesBoutonsAtt[i].Margin = new Thickness(lesBoutonsAtt[i].Height * (i % 9), lesBoutonsAtt[i].Width * (i / 9), 0, 0);
-                this.GrilleJoueur2.Children.Add(lesBoutonsAtt[i]);
-                lesBoutonsAtt[i].Tag = 0;
-                Grid.SetColumn(lesBoutonsAtt[i], 0);
+                lesBoutonsAttJoueur2[i] = new Button();
+                lesBoutonsAttJoueur2[i].Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/carreaux_normal.png", UriKind.Absolute)));
+                lesBoutonsAttJoueur2[i].Width = 50;
+                lesBoutonsAttJoueur2[i].Height = 50;
+                lesBoutonsAttJoueur2[i].VerticalAlignment = VerticalAlignment.Top;
+                lesBoutonsAttJoueur2[i].HorizontalAlignment = HorizontalAlignment.Left;
+                lesBoutonsAttJoueur2[i].Margin = new Thickness(lesBoutonsAttJoueur2[i].Height * (i % 9), lesBoutonsAttJoueur2[i].Width * (i / 9), 0, 0);
+                this.GrilleJoueur2.Children.Add(lesBoutonsAttJoueur2[i]);
+                lesBoutonsAttJoueur2[i].Tag = 0;
+                Grid.SetColumn(lesBoutonsAttJoueur2[i], 0);
                 // ici il est placé dans la 1ere colonne da ma grille
-                lesBoutonsAtt[i].Click += this.UnBouton_Click;
+                if (MainWindow.nbTour == 1)
+                    labReponse.Content = "Placer vos bateau sur la grille de defense";
+                else
+                    lesBoutonsAttJoueur2[i].Click += this.UnBouton_Click;
             }
         }
         public void InitialiseGrilleDefense()
         {
-            for (int i = 0; i < lesBoutonsDef.Length; i++)
+            for (int i = 0; i < lesBoutonsDefJoueur2.Length; i++)
             {
-                lesBoutonsDef[i] = new Button();
-                lesBoutonsDef[i].Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/carreaux_normal.png", UriKind.Absolute)));
-                lesBoutonsDef[i].Width = 50;
-                lesBoutonsDef[i].Height = 50;
-                lesBoutonsDef[i].VerticalAlignment = VerticalAlignment.Top;
-                lesBoutonsDef[i].HorizontalAlignment = HorizontalAlignment.Left;
-                lesBoutonsDef[i].Margin = new Thickness(lesBoutonsDef[i].Height * (i % 9), lesBoutonsDef[i].Width * (i / 9), 0, 0);
-                this.GrilleJoueur2.Children.Add(lesBoutonsDef[i]);
-                lesBoutonsDef[i].Tag = 0;
-                Grid.SetColumn(lesBoutonsDef[i], 1);
+                lesBoutonsDefJoueur2[i] = new Button();
+                lesBoutonsDefJoueur2[i].Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/carreaux_normal.png", UriKind.Absolute)));
+                lesBoutonsDefJoueur2[i].Width = 50;
+                lesBoutonsDefJoueur2[i].Height = 50;
+                lesBoutonsDefJoueur2[i].VerticalAlignment = VerticalAlignment.Top;
+                lesBoutonsDefJoueur2[i].HorizontalAlignment = HorizontalAlignment.Left;
+                lesBoutonsDefJoueur2[i].Margin = new Thickness(lesBoutonsDefJoueur2[i].Height * (i % 9), lesBoutonsDefJoueur2[i].Width * (i / 9), 0, 0);
+                this.GrilleJoueur2.Children.Add(lesBoutonsDefJoueur2[i]);
+                lesBoutonsDefJoueur2[i].Tag = 0;
+                Grid.SetColumn(lesBoutonsDefJoueur2[i], 1);
                 // ici il est placé dans la 2eme colonne da ma grille
             }
         }
@@ -69,23 +71,28 @@ namespace Bataille_Navale
         private void UnBouton_Click(object sender, RoutedEventArgs e)
         {
             Button bouton = ((Button)sender);
-            if (bouton.Tag is not 0 && bouton.Tag is not 1)
+            for (int i = 0; i < lesBoutonsAttJoueur2.Length; i++)
             {
-                labReponse.Content = "Veuiller saisir une case pas utilisée.";
+                if (bouton == lesBoutonsAttJoueur2[i])
+                {
+                    if (bouton.Tag is not 0 && bouton.Tag is not 1)
+                    {
+                        labReponse.Content = "Veuiller saisir une case pas utilisée.";
+                    }
+                    else if (UCJoueur1.nbTir == false)
+                    {
+                        labReponse.Content = "Vous avez déjà joué. Appuyer sur Suivant.";
+                    }
+                    else
+                    {
+                        labReponse.Content = "";
+                        Verif_Bateau(bouton);
+                        UCJoueur1.nbTir = false;
+                        butSuivant.Opacity = 1;
+                        butSuivant.IsEnabled = true;
+                    }
+                }
             }
-            else if (nbTirJoueur2 == true)
-            {
-                labReponse.Content = "Vous avez déjà joué. Appuyer sur Suivant.";
-            }
-            else
-            {
-                labReponse.Content = "";
-                Verif_Bateau(bouton);
-                nbTirJoueur2 = true;
-                butSuivant.Opacity = 1;
-                butSuivant.IsEnabled = true;
-            }
-
         }
 
 
