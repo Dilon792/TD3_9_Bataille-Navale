@@ -238,7 +238,7 @@ namespace Bataille_Navale
                 grilleDefense[indexCourant].Tag = 1;
 
                 // Mettre à jour l'affichage
-                grilleDefense[indexCourant].Background = new ImageBrush(new BitmapImage(new Uri("P:\\SAE1.01 + SAE1.02\\15_12_2025\\Bataille_Navale\\images\\tempoBateau.jpg")));
+                grilleDefense[indexCourant].Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/tempoBateau.jpg")));
             }
         }
         public void FinPhasePlacement()

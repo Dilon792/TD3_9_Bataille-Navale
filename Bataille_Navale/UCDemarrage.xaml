@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Bataille_Navale.UCDemarrage"
+﻿<UserControl x:Name="userControl" x:Class="Bataille_Navale.UCDemarrage"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,17 +7,21 @@
              mc:Ignorable="d" 
              d:DesignHeight="900" d:DesignWidth="1600">
     <Grid>
-        <Button x:Name="butJouer_Solo" Content="" HorizontalAlignment="Left" Margin="214,544,0,0" VerticalAlignment="Top" Height="140" Width="440" FontSize="40">
+        <Button x:Name="butJouer_Solo" Content="" HorizontalAlignment="Left" Margin="229,568,0,0" VerticalAlignment="Top" Height="116" Width="448" FontSize="40" BorderBrush="{x:Null}">
             <Button.Background>
-                <ImageBrush ImageSource="images/But_1J.png"/>
+                <ImageBrush ImageSource="/But_1J.png"/>
             </Button.Background>
         </Button>
-        <Button Content="Mode 2 joueur" HorizontalAlignment="Left" Margin="982,544,0,0" VerticalAlignment="Top" Height="140" Width="440" FontSize="40">
+        <Button HorizontalAlignment="Left" Margin="930,568,0,0" VerticalAlignment="Top" Height="116" Width="448" FontSize="40" BorderBrush="{x:Null}">
             <Button.Background>
                 <ImageBrush Stretch="Fill" ImageSource="images/But_2J.png"/>
             </Button.Background>
         </Button>
-        <Button Content="Règles" HorizontalAlignment="Center" Height="76" Margin="0,730,0,0" VerticalAlignment="Top" Width="300" FontSize="40"/>
+        <Button  HorizontalAlignment="Center" Height="116" Margin="0,733,0,0" VerticalAlignment="Top" Width="448" FontSize="40" BorderBrush="{x:Null}" FocusVisualStyle="{x:Null}">
+            <Button.Background>
+                <ImageBrush ImageSource="/But_Regle.png"/>
+            </Button.Background>
+        </Button>
 
     </Grid>
 </UserControl>

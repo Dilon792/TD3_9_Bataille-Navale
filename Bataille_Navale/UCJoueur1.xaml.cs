@@ -151,7 +151,7 @@ namespace Bataille_Navale
             }
             for (int i = 0; i < lesBoutonsAttJoueur1.Length; i++)
             {
-                if () ;
+                //if () ;
             }
         }
 
@@ -249,7 +249,7 @@ namespace Bataille_Navale
                     grilleDefense[indexCourant].Tag = bateauID;
 
                     // Mettre à jour l'affichage
-                    grilleDefense[indexCourant].Background = new ImageBrush(new BitmapImage(new Uri("P:\\SAE1.01 + SAE1.02\\15_12_2025\\Bataille_Navale\\images\\tempoBateau.jpg")));
+                    grilleDefense[indexCourant].Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/tempoBateau.jpg")));
                 }
             }
         public void ActiverModeAttaque()
