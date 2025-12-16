@@ -28,6 +28,7 @@ namespace Bataille_Navale
         private bool estVertical = true;
         public bool enModePlacement = true;
         public string[] nomBateau = ["Torpilleur", "Contre-Torpilleur", "Sous-marin", "Croiseur", "Porte-avion"];
+        public static bool FinDePartie { get; set; } = false;
         public UCJoueur2()
         {
             InitializeComponent();
@@ -141,6 +142,8 @@ namespace Bataille_Navale
 
         private void Verif_Bateau(Button bouton)
         {
+            int caseBateauRestante = 0;
+            int caseRestante = 0;
             if (bouton.Tag is 0)
             {
                 bouton.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/carreaux_raté.png", UriKind.Absolute)));
@@ -148,6 +151,21 @@ namespace Bataille_Navale
             else if (bouton.Tag is 1)
             {
                 bouton.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/carreaux_toucher.png", UriKind.Absolute)));
+            }
+            for (int i = 0; i < lesBoutonsAttJoueur2.Length; i++)
+            {
+                if (bouton.Tag is 0 && bouton.Tag is 1)
+                    caseRestante++;
+                if (lesBoutonsAttJoueur2[i].Background == new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/carreaux_normal.png", UriKind.Absolute))) && lesBoutonsAttJoueur2[i].Tag == bouton.Tag)
+                    caseBateauRestante++;
+            }
+            if (caseRestante == 0)
+                FinDePartie = true;
+            if (caseBateauRestante == 0)
+            {
+                for (int i = 0; i < lesBoutonsAttJoueur2.Length; i++)
+                    if (bouton.Tag == lesBoutonsAttJoueur2[i].Tag)
+                        bouton.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/carreaux_détruit.png", UriKind.Absolute)));
             }
         }
 

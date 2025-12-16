@@ -22,6 +22,7 @@ namespace Bataille_Navale
         UCJoueur1 ucJoueur1 = new UCJoueur1();
         public static int nbTour { set; get; } = 1;
         UCDemarrage ucDemarrage = new UCDemarrage();
+        UCFinDePartie ucEcranFin = new UCFinDePartie();
         public MainWindow()
         {
             InitializeComponent();
@@ -42,6 +43,8 @@ namespace Bataille_Navale
             Console.WriteLine(nbTour);
             ZoneJeu.Content = ucJoueur1;
             this.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/fond_jeu.png")));
+            if (UCJoueur1.FinDePartie == true)
+                ZoneJeu.Content = ucEcranFin;
             ucJoueur1.butSuivant.Click += AfficherTransition;
             if (nbTour >= 4)
             {

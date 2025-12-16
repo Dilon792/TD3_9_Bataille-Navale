@@ -30,6 +30,7 @@ namespace Bataille_Navale
         public bool estVertical = true;
         public bool enModePlacement = false;
         public string[] nomBateau = ["Torpilleur","Contre-Torpilleur", "Sous-marin", "Croiseur", "Porte-avion"];
+        public static bool FinDePartie { get; set; } = false;
         public UCJoueur1()
         {
             InitializeComponent();
@@ -139,21 +140,36 @@ namespace Bataille_Navale
         private void Verif_Bateau(Button bouton)
         {
             int caseBateauRestante = 0;
+            int caseRestante = 0;
             if (bouton.Tag is 0)
             {
                 bouton.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/carreaux_raté.png", UriKind.Absolute)));
-                bouton.Tag = 2;
+                bouton.Tag = 1;
             }
-            else if (bouton.Tag is not 0)
+            else if (bouton.Tag is not 0 && bouton.Tag is not 1)
             {
                 bouton.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/carreaux_toucher.png", UriKind.Absolute)));
-                bouton.Tag = 3;
             }
             for (int i = 0; i < lesBoutonsAttJoueur1.Length; i++)
             {
-                //if () ;
+                if (bouton.Tag is not 0 && bouton.Tag is not 1)
+                    caseRestante++;
+                if (lesBoutonsAttJoueur1[i].Background == new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/carreaux_normal.png", UriKind.Absolute))) && lesBoutonsAttJoueur1[i].Tag == bouton.Tag)
+                    caseBateauRestante++;
+            }
+            if (caseRestante == 0)
+                FinDePartie = true;
+            if (caseBateauRestante == 0)
+            {
+                for (int i = 0; i < lesBoutonsAttJoueur1.Length; i++)
+                    if (bouton.Tag == lesBoutonsAttJoueur1[i].Tag)
+                    {
+                        bouton.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/carreaux_détruit.png", UriKind.Absolute)));
+                        bouton.Tag = 1;
+                    }   
             }
         }
+
 
         // Dans UCJoueur1.xaml.cs
         private void butRotation_Click(object sender, RoutedEventArgs e)
