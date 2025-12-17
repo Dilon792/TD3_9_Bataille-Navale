@@ -34,5 +34,10 @@ namespace Bataille_Navale
             if(UCJoueur2.FinDePartie == true)
                 labGagnant.Content = "Le Joueur 2 a gagné la partie.";
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
     }
 }

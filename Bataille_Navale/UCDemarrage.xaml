@@ -13,7 +13,7 @@
                 <ImageBrush Stretch="Fill" ImageSource="images/But_2J.png"/>
             </Button.Background>
         </Button>
-        <Button  HorizontalAlignment="Center" Height="116" Margin="0,733,0,0" VerticalAlignment="Top" Width="448" FontSize="40" BorderBrush="{x:Null}" FocusVisualStyle="{x:Null}">
+        <Button x:Name="butRegles"  HorizontalAlignment="Center" Height="116" Margin="0,733,0,0" VerticalAlignment="Top" Width="448" FontSize="40" BorderBrush="{x:Null}" FocusVisualStyle="{x:Null}">
             <Button.Background>
                 <ImageBrush ImageSource="/But_Regle.png"/>
             </Button.Background>
