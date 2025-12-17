@@ -28,15 +28,35 @@ namespace Bataille_Navale
         {
             InitializeComponent();
             AffichageDemarrage();
+            ucDemarrage.but2Joueur.Click += LancerNouvellePartie;
+
+            ucDemarrage.butRegles.Click += AfficherRegle;
+            ucRegle.butRetourRegle.Click += RetourAuMenu;
+
+            AffichageDemarrage();
         }
+
+        private void LancerNouvellePartie(object sender, RoutedEventArgs e)
+        {
+            nbTour = 1;
+            UCJoueur1.FinDePartie = false;
+            UCJoueur2.FinDePartie = false;
+            UCJoueur1.nbTir = false;
+
+            ucJoueur1 = new UCJoueur1();
+            ucJoueur2 = new UCJoueur2();
+
+            ucJoueur1.butSuivant.Click += AfficherTransition;
+            ucJoueur2.butSuivant.Click += AfficherTransition;
+
+            AfficherJoueur1(sender, e);
+        }
+
         public void AffichageDemarrage()
         {
-            
-
             // associe l'écran au conteneur
             ZoneJeu.Content = ucDemarrage;
-            ucDemarrage.but2Joueur.Click += AfficherJoueur1;
-            ucDemarrage.butRegles.Click += AfficherRegle;
+
         }
 
         private void AfficherJoueur1(object sender, RoutedEventArgs e)
@@ -115,6 +135,12 @@ namespace Bataille_Navale
         private void AfficherRegle(object sender, RoutedEventArgs e)
         {
             ZoneJeu.Content = ucRegle;
+            ucRegle.butRetourRegle.Click += RetourAuMenu;
+        }
+
+        private void RetourAuMenu(object sender, RoutedEventArgs e)
+        {
+            AffichageDemarrage();
         }
     }
 }

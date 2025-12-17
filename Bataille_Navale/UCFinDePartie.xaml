@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1600">
     <Grid>
-        <Label x:Name="labGagnant" Content="" HorizontalAlignment="Center" Margin="0,123,0,0" VerticalAlignment="Top" FontSize="36" Height="184" Width="930" HorizontalContentAlignment="Center"/>
+        <Label Content ="FIN DE PARTIE" x:Name="labGagnant" HorizontalAlignment="Center" Margin="0,123,0,0" VerticalAlignment="Top" FontSize="70" Height="184" Width="930" HorizontalContentAlignment="Center" Foreground="#FFF7F6F6"/>
         <Label Content="Appuyer sur &quot;Quitter&quot; pour fermer le jeu" HorizontalAlignment="Center" Margin="0,450,0,0" VerticalAlignment="Top" FontSize="36" Background="Transparent" Foreground="White"/>
         <Button Content="Quitter" HorizontalAlignment="Left" Margin="639,603,0,0" VerticalAlignment="Top" Height="83" Width="255" FontSize="36" Click="Button_Click">
         </Button>

@@ -10,10 +10,6 @@
 
   <ItemGroup>
     <None Remove="1000_F_443693248_FFOUon01HIYUVLVPFIyhrzDlbmWN8XKq.jpg" />
-    <None Remove="But_1J.png" />
-    <None Remove="But_2J.png" />
-    <None Remove="But_Regle.png" />
-    <None Remove="Fond_Ecran_Accueil.png" />
     <None Remove="images\But_1J.png" />
     <None Remove="images\But_2J.png" />
     <None Remove="images\But_Regle.png" />
@@ -28,10 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="But_1J.png" />
-    <Resource Include="But_2J.png" />
-    <Resource Include="But_Regle.png" />
-    <Resource Include="Fond_Ecran_Accueil.png" />
     <Resource Include="images\But_1J.png" />
     <Resource Include="images\But_2J.png" />
     <Resource Include="images\But_Regle.png" />
