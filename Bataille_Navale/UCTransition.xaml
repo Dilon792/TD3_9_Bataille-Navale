@@ -7,9 +7,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="900" d:DesignWidth="1600">
     <Grid>
-        <Label Content="Ceci est une mesure anti-triche." HorizontalAlignment="Center" Margin="0,261,0,0" VerticalAlignment="Top" FontSize="48"/>
-        <Label Content="Cette page a été créer pour éviter de regarder la grille de l'autre joueur." HorizontalAlignment="Center" Margin="0,408,0,0" VerticalAlignment="Top" FontSize="24"/>
-        <Label Content="Pour continuer, l'autre joueur doit appuyer sur le bouton Suivant." HorizontalAlignment="Center" Margin="0,450,0,0" VerticalAlignment="Top" FontSize="24"/>
+        <Label Content="Ceci est une mesure anti-triche." HorizontalAlignment="Center" Margin="0,261,0,0" VerticalAlignment="Top" FontSize="48" Foreground="White"/>
+        <Label Content="Cette page a été créer pour éviter de regarder la grille de l'autre joueur." HorizontalAlignment="Center" Margin="0,408,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+        <Label Content="Pour continuer, l'autre joueur doit appuyer sur le bouton Suivant." HorizontalAlignment="Center" Margin="0,450,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
         <Button x:Name="butSuivantTransition" Content="Suivant" HorizontalAlignment="Center" Margin="0,630,0,0" VerticalAlignment="Top" Height="100" Width="250" FontSize="36"/>
 
     </Grid>

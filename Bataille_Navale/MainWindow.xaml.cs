@@ -17,10 +17,11 @@ namespace Bataille_Navale
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static int nbTour { set; get; } = 1;
         UCJoueur2 ucJoueur2 = new UCJoueur2();
         UCTransition ucTransition = new UCTransition();
         UCJoueur1 ucJoueur1 = new UCJoueur1();
-        public static int nbTour { set; get; } = 1;
+        UCRegle ucRegle = new UCRegle();
         UCDemarrage ucDemarrage = new UCDemarrage();
         UCFinDePartie ucEcranFin = new UCFinDePartie();
         public MainWindow()
@@ -35,6 +36,7 @@ namespace Bataille_Navale
             // associe l'écran au conteneur
             ZoneJeu.Content = ucDemarrage;
             ucDemarrage.butJouer_Solo.Click += AfficherJoueur1;
+            ucDemarrage.butRegles.Click += AfficherRegle;
         }
 
         private void AfficherJoueur1(object sender, RoutedEventArgs e)
@@ -108,6 +110,11 @@ namespace Bataille_Navale
                 }
                 ucJoueur2.ActiverModeAttaque();
             }
+        }
+
+        private void AfficherRegle(object sender, RoutedEventArgs e)
+        {
+            ZoneJeu.Content = ucRegle;
         }
     }
 }
