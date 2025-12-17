@@ -22,7 +22,7 @@ namespace Bataille_Navale
     {
         public UCTransition()
         {
-            InitializeComponent();
+            InitializeComponent() ;
         }
 
     }
