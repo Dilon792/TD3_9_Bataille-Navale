@@ -300,7 +300,7 @@ namespace Bataille_Navale
                  // Vérification du retour à la ligne (uniquement pour horizontal)
                  if (!estVertical && indexDepart / 9 != indexCourant / 9) return false;
                  // Vérification du chevauchement
-                 if (grilleDefense[indexCourant].Tag is 1) return false;
+                 if ((int)grilleDefense[indexCourant].Tag > 1) return false;
             }
             return true;
         }

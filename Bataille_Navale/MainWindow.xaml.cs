@@ -35,7 +35,7 @@ namespace Bataille_Navale
 
             // associe l'écran au conteneur
             ZoneJeu.Content = ucDemarrage;
-            ucDemarrage.but2Joueur += AfficherJoueur1;
+            ucDemarrage.but2Joueur.Click += AfficherJoueur1;
             ucDemarrage.butRegles.Click += AfficherRegle;
         }
 
