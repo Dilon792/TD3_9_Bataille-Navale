@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bataille_Navale"
         mc:Ignorable="d"
-        Title="MainWindow" Height="900" Width="1600">
+        Title="MainWindow" Height="900" Width="1600"
+        ResizeMode="NoResize">
     <ContentControl x:Name="ZoneJeu" />
     <Window.Background>
         <ImageBrush ImageSource="images/Fond_Ecran_Accueil.png" Stretch="UniformToFill"/>

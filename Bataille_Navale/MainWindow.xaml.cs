@@ -41,16 +41,29 @@ namespace Bataille_Navale
         {
             nbTour += 1;
             Console.WriteLine(nbTour);
-            ZoneJeu.Content = ucJoueur1;
-            this.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/fond_jeu.png")));
-            if (UCJoueur1.FinDePartie == true)
-                ZoneJeu.Content = ucEcranFin;
-            ucJoueur1.butSuivant.Click += AfficherTransition;
-            if (nbTour >= 4)
+
+            // Vérification de la victoire de J2 (si la partie s'est terminée au tour précédent)
+            if (UCJoueur2.FinDePartie == true)
             {
-                ucJoueur1.ActiverModeAttaque();
+                ZoneJeu.Content = ucEcranFin;
+                return; // Arrêter et afficher l'écran de fin
             }
 
+            ZoneJeu.Content = ucJoueur1;
+            this.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/fond_jeu.png")));
+
+            ucJoueur1.butSuivant.Click += AfficherTransition;
+
+            if (nbTour >= 4) // Phase d'attaque
+            {
+                // *** CORRECTION 1.A : Synchroniser J1 Attaque avec J2 Défense ***
+                for (int i = 0; i < UCJoueur1.lesBoutonsAttJoueur1.Length; i++)
+                {
+                    // J1 Attaque prend l'état de J2 Défense
+                    UCJoueur1.lesBoutonsAttJoueur1[i].Tag = UCJoueur2.lesBoutonsDefJoueur2[i].Tag;
+                }
+                ucJoueur1.ActiverModeAttaque();
+            }
         }
 
         private void AfficherTransition(object sender, RoutedEventArgs e)
@@ -70,15 +83,31 @@ namespace Bataille_Navale
         {
             nbTour += 1;
             Console.WriteLine(nbTour);
-            ZoneJeu.Content = ucJoueur2;
-            ucJoueur2.butSuivant.Click += AfficherTransition;
-            if (nbTour == 3)
-                ucJoueur2.DemarrerPlacementJoueur2();
-            else if (nbTour >= 5)
+
+            // Vérification de la victoire de J1 (si la partie s'est terminée au tour précédent)
+            if (UCJoueur1.FinDePartie == true)
             {
-                ucJoueur2.ActiverModeAttaque();
+                ZoneJeu.Content = ucEcranFin;
+                return; // Arrêter et afficher l'écran de fin
             }
 
+            ZoneJeu.Content = ucJoueur2;
+            ucJoueur2.butSuivant.Click += AfficherTransition;
+
+            if (nbTour == 3)
+            {
+                ucJoueur2.DemarrerPlacementJoueur2();
+            }
+            else if (nbTour >= 5) // Phase d'attaque
+            {
+                // *** CORRECTION 1.B : Synchroniser J2 Attaque avec J1 Défense ***
+                for (int i = 0; i < UCJoueur2.lesBoutonsAttJoueur2.Length; i++)
+                {
+                    // J2 Attaque prend l'état de J1 Défense
+                    UCJoueur2.lesBoutonsAttJoueur2[i].Tag = UCJoueur1.lesBoutonsDefJoueur1[i].Tag;
+                }
+                ucJoueur2.ActiverModeAttaque();
+            }
         }
     }
 }

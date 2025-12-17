@@ -119,9 +119,9 @@ namespace Bataille_Navale
             {
                 if (bouton == lesBoutonsAttJoueur2[i])
                 {
-                    if (bouton.Tag is not 0 && bouton.Tag is not 1)
+                    if ((int)bouton.Tag == 1 || (int)bouton.Tag < 0)
                     {
-                        labReponse.Content = "Veuiller saisir une case pas utilisée.";
+                        labReponse.Content = "Veuiller saisir une case non jouée."; //
                     }
                     else if (UCJoueur1.nbTir == false)
                     {
@@ -141,33 +141,83 @@ namespace Bataille_Navale
 
 
         private void Verif_Bateau(Button bouton)
+{
+    // On trouve l'index du bouton cliqué pour mettre à jour la grille de J1
+    int index = Array.IndexOf(lesBoutonsAttJoueur2, bouton); 
+    int tagBateau = (int)bouton.Tag;
+
+    // --- 1. Gérer le Miss (Eau, Tag=0) ---
+    if (tagBateau == 0) 
+    {
+        bouton.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/carreaux_raté.png", UriKind.Absolute)));
+        bouton.Tag = 1; 
+        
+        // *** CORRECTION 2.B.i : Mise à jour de la grille de défense ADVERSE (J1) ***
+        UCJoueur1.lesBoutonsDefJoueur1[index].Tag = 1; 
+        UCJoueur1.lesBoutonsDefJoueur1[index].Background = bouton.Background;
+    }
+    // --- 2. Gérer le Hit (Bateau, Tag > 1) ---
+    else if (tagBateau > 1) 
+    {
+        // Hit
+        bouton.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/carreaux_toucher.png", UriKind.Absolute)));
+        bouton.Tag = -tagBateau; // Marquer comme touché
+
+        // *** CORRECTION 2.B.i : Mise à jour de la grille de défense ADVERSE (J1) ***
+        UCJoueur1.lesBoutonsDefJoueur1[index].Tag = -tagBateau; 
+        UCJoueur1.lesBoutonsDefJoueur1[index].Background = bouton.Background;
+
+        // --- 3. Vérification de la destruction du bateau ---
+        int caseBateauRestante = 0;
+        // Compter les cases du même bateau qui n'ont pas encore été touchées (Tag == tagBateau) sur la grille de DÉFENSE ADVERSE (J1)
+        for (int i = 0; i < UCJoueur1.lesBoutonsDefJoueur1.Length; i++) 
         {
-            int caseBateauRestante = 0;
-            int caseRestante = 0;
-            if (bouton.Tag is 0)
+            if (UCJoueur1.lesBoutonsDefJoueur1[i].Tag is int tag && tag == tagBateau)
             {
-                bouton.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/carreaux_raté.png", UriKind.Absolute)));
-            }
-            else if (bouton.Tag is 1)
-            {
-                bouton.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/carreaux_toucher.png", UriKind.Absolute)));
-            }
-            for (int i = 0; i < lesBoutonsAttJoueur2.Length; i++)
-            {
-                if (bouton.Tag is 0 && bouton.Tag is 1)
-                    caseRestante++;
-                if (lesBoutonsAttJoueur2[i].Background == new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/carreaux_normal.png", UriKind.Absolute))) && lesBoutonsAttJoueur2[i].Tag == bouton.Tag)
-                    caseBateauRestante++;
-            }
-            if (caseRestante == 0)
-                FinDePartie = true;
-            if (caseBateauRestante == 0)
-            {
-                for (int i = 0; i < lesBoutonsAttJoueur2.Length; i++)
-                    if (bouton.Tag == lesBoutonsAttJoueur2[i].Tag)
-                        bouton.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/carreaux_détruit.png", UriKind.Absolute)));
+                caseBateauRestante++;
             }
         }
+        
+        // Si plus de cases non touchées, le bateau est coulé.
+        if (caseBateauRestante == 0)
+        {
+            // Mettre à jour TOUTES les cases touchées (-tagBateau) en coulé (1) sur les deux grilles
+            for (int i = 0; i < lesBoutonsAttJoueur2.Length; i++) 
+            {
+                if (lesBoutonsAttJoueur2[i].Tag is int attTag && attTag == -tagBateau)
+                {
+                    // Grille d'attaque (J2)
+                    lesBoutonsAttJoueur2[i].Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/carreaux_détruit.png", UriKind.Absolute)));
+                    lesBoutonsAttJoueur2[i].Tag = 1; 
+
+                    // Grille de défense (J1)
+                    UCJoueur1.lesBoutonsDefJoueur1[i].Background = lesBoutonsAttJoueur2[i].Background;
+                    UCJoueur1.lesBoutonsDefJoueur1[i].Tag = 1;
+                }
+            }
+        }
+    }
+
+    // --- 4. Vérification de la fin de partie (Tour 6 Corrigé) ---
+    int nbCasesBateauRestantes = 0;
+
+    // Compter toutes les parties de bateau (Tag > 1 ou Tag < 0) restantes sur la grille de DÉFENSE ADVERSE (J1)
+    for (int i = 0; i < UCJoueur1.lesBoutonsDefJoueur1.Length; i++)
+    {
+        if (UCJoueur1.lesBoutonsDefJoueur1[i].Tag is int tag)
+        {
+            if (tag > 1 || tag < 0) // Si c'est un bateau non coulé
+            {
+                nbCasesBateauRestantes++;
+            }
+        }
+    }
+
+    if (nbCasesBateauRestantes == 0)
+    {
+        FinDePartie = true; // J2 a gagné
+    }
+}
 
         private void butRotation_Click(object sender, RoutedEventArgs e)
         {
@@ -249,11 +299,13 @@ namespace Bataille_Navale
         // Fonction pour placer le bateau et mettre à jour l'affichage
         private void Placer(Button[] grilleDefense, int indexDepart, int longueur, bool estVertical)
         {
+            // L'ID du bateau est maintenant numBateau + 1 (donc 2, 3, 4, 5, 6)
+            int bateauID = numBateau + 2;
             for (int k = 0; k < longueur; k++)
             {
                 int indexCourant = estVertical ? indexDepart + k * 9 : indexDepart + k;
-                // Mettre à jour le Tag (0=vide, 1=bateau)
-                grilleDefense[indexCourant].Tag = 1;
+                // Mettre à jour le Tag avec l'ID unique du bateau
+                grilleDefense[indexCourant].Tag = bateauID;
 
                 // Mettre à jour l'affichage
                 grilleDefense[indexCourant].Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/tempoBateau.jpg")));

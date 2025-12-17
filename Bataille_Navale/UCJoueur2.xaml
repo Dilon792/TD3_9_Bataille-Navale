@@ -8,8 +8,10 @@
              d:DesignHeight="900" d:DesignWidth="1600">
     <Grid x:Name="GrilleJoueur2" Margin="200,237,0,0">
         <Button x:Name="butRotation" Content="Orientation: Verticale" HorizontalAlignment="Left" Margin="10,570,0,0" VerticalAlignment="Top" Height="50" Width="200" FontSize="20" Click="butRotation_Click"/>
-        <Label x:Name="labReponse" Content="" HorizontalAlignment="Left" Margin="250,570,0,0" VerticalAlignment="Top" Width="700" Height="83" FontSize="36" HorizontalContentAlignment="Center" Grid.ColumnSpan="2" Foreground="White"/>
-        <Button x:Name="butSuivant" Grid.Column="1" Content="Suivant" HorizontalAlignment="Left" Margin="390,562,0,0" VerticalAlignment="Top" Height="90" Width="300" IsEnabled="False" Opacity="0"/>
+        <Label x:Name="labReponse" Content="" HorizontalAlignment="Left" Margin="252,549,0,0" VerticalAlignment="Top" Width="700" Height="83" FontSize="24" HorizontalContentAlignment="Center" Grid.ColumnSpan="2" Foreground="White"/>
+        <Button x:Name="butSuivant" Grid.Column="1" Content="Suivant" HorizontalAlignment="Left" Margin="350,530,0,0" VerticalAlignment="Top" Height="90" Width="300" IsEnabled="False" Opacity="0"/>
+        <Label Content="Grille Défense" HorizontalAlignment="Left" Margin="110,-118,0,0" VerticalAlignment="Top" FontSize="36"/>
+        <Label Grid.Column="1" Content="Grille Attaque" HorizontalAlignment="Left" Margin="113,-118,0,0" VerticalAlignment="Top" FontSize="36"/>
         <Grid.ColumnDefinitions>
             <ColumnDefinition x:Name="ColonneAttaque" Width="800*"/>
             <ColumnDefinition x:Name="ColonneDefense" Width="800*"/>

@@ -117,9 +117,9 @@ namespace Bataille_Navale
             {
                 if (bouton == lesBoutonsAttJoueur1[i])
                 {
-                    if (bouton.Tag is not 0 && bouton.Tag is not 1)
+                    if ((int)bouton.Tag == 1 || (int)bouton.Tag < 0) 
                     {
-                        labReponse.Content = "Veuiller saisir une case pas utilisée.";
+                        labReponse.Content = "Veuiller saisir une case non jouée.";
                     }
                     else if (nbTir == true)
                     {
@@ -138,37 +138,83 @@ namespace Bataille_Navale
        }
 
         private void Verif_Bateau(Button bouton)
+{
+    // On trouve l'index du bouton cliqué pour mettre à jour la grille de J2
+    int index = Array.IndexOf(lesBoutonsAttJoueur1, bouton); 
+    int tagBateau = (int)bouton.Tag;
+
+    // --- 1. Gérer le Miss (Eau, Tag=0) ---
+    if (tagBateau == 0) 
+    {
+        bouton.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/carreaux_raté.png", UriKind.Absolute)));
+        bouton.Tag = 1; 
+        
+        // *** CORRECTION 2.C.i : Mise à jour de la grille de défense ADVERSE (J2) ***
+        UCJoueur2.lesBoutonsDefJoueur2[index].Tag = 1; 
+        UCJoueur2.lesBoutonsDefJoueur2[index].Background = bouton.Background;
+    }
+    // --- 2. Gérer le Hit (Bateau, Tag > 1) ---
+    else if (tagBateau > 1) 
+    {
+        // Hit
+        bouton.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/carreaux_toucher.png", UriKind.Absolute)));
+        bouton.Tag = -tagBateau; // Marquer comme touché
+
+        // *** CORRECTION 2.C.i : Mise à jour de la grille de défense ADVERSE (J2) ***
+        UCJoueur2.lesBoutonsDefJoueur2[index].Tag = -tagBateau; 
+        UCJoueur2.lesBoutonsDefJoueur2[index].Background = bouton.Background;
+
+        // --- 3. Vérification de la destruction du bateau ---
+        int caseBateauRestante = 0;
+        // Compter les cases du même bateau qui n'ont pas encore été touchées (Tag == tagBateau) sur la grille de DÉFENSE ADVERSE (J2)
+        for (int i = 0; i < UCJoueur2.lesBoutonsDefJoueur2.Length; i++) 
         {
-            int caseBateauRestante = 0;
-            int caseRestante = 0;
-            if (bouton.Tag is 0)
+            if (UCJoueur2.lesBoutonsDefJoueur2[i].Tag is int tag && tag == tagBateau)
             {
-                bouton.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/carreaux_raté.png", UriKind.Absolute)));
-                bouton.Tag = 1;
-            }
-            else if (bouton.Tag is not 0 && bouton.Tag is not 1)
-            {
-                bouton.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/carreaux_toucher.png", UriKind.Absolute)));
-            }
-            for (int i = 0; i < lesBoutonsAttJoueur1.Length; i++)
-            {
-                if (bouton.Tag is not 0 && bouton.Tag is not 1)
-                    caseRestante++;
-                if (lesBoutonsAttJoueur1[i].Background == new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/carreaux_normal.png", UriKind.Absolute))) && lesBoutonsAttJoueur1[i].Tag == bouton.Tag)
-                    caseBateauRestante++;
-            }
-            if (caseRestante == 0)
-                FinDePartie = true;
-            if (caseBateauRestante == 0)
-            {
-                for (int i = 0; i < lesBoutonsAttJoueur1.Length; i++)
-                    if (bouton.Tag == lesBoutonsAttJoueur1[i].Tag)
-                    {
-                        bouton.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/carreaux_détruit.png", UriKind.Absolute)));
-                        bouton.Tag = 1;
-                    }   
+                caseBateauRestante++;
             }
         }
+        
+        // Si plus de cases non touchées, le bateau est coulé.
+        if (caseBateauRestante == 0)
+        {
+            // Mettre à jour TOUTES les cases touchées (-tagBateau) en coulé (1) sur les deux grilles
+            for (int i = 0; i < lesBoutonsAttJoueur1.Length; i++) 
+            {
+                if (lesBoutonsAttJoueur1[i].Tag is int attTag && attTag == -tagBateau)
+                {
+                    // Grille d'attaque (J1)
+                    lesBoutonsAttJoueur1[i].Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/carreaux_détruit.png", UriKind.Absolute)));
+                    lesBoutonsAttJoueur1[i].Tag = 1; 
+
+                    // Grille de défense (J2)
+                    UCJoueur2.lesBoutonsDefJoueur2[i].Background = lesBoutonsAttJoueur1[i].Background;
+                    UCJoueur2.lesBoutonsDefJoueur2[i].Tag = 1;
+                }
+            }
+        }
+    }
+
+    // --- 4. Vérification de la fin de partie (Tour 6 Corrigé) ---
+    int nbCasesBateauRestantes = 0;
+
+    // Compter toutes les parties de bateau (Tag > 1 ou Tag < 0) restantes sur la grille de DÉFENSE ADVERSE (J2)
+    for (int i = 0; i < UCJoueur2.lesBoutonsDefJoueur2.Length; i++)
+    {
+        if (UCJoueur2.lesBoutonsDefJoueur2[i].Tag is int tag)
+        {
+            if (tag > 1 || tag < 0) // Si c'est un bateau non coulé
+            {
+                nbCasesBateauRestantes++;
+            }
+        }
+    }
+
+    if (nbCasesBateauRestantes == 0)
+    {
+        FinDePartie = true; // J1 a gagné
+    }
+}
 
 
         // Dans UCJoueur1.xaml.cs
@@ -218,6 +264,8 @@ namespace Bataille_Navale
                 labReponse.Content = "Placement invalide (chevauchement ou hors grille). Réessayez. (Orientation: " + (estVertical ? "Verticale" : "Horizontale") + ")";
             }
         }
+
+        // Permet de finir la phase de de placement et de ne pas surcharger les méthodes
         public void FinPhasePlacement()
         {
             enModePlacement = false;
@@ -236,19 +284,17 @@ namespace Bataille_Navale
             butSuivant.IsEnabled = true;
         }
 
+        // Vérifier si on peut placer le bateau 
         private bool VerifPlacement(Button[] grilleDefense, int indexDepart, int longueur, bool estVertical)
             {
-            // ... Logique de vérification du chevauchement et des limites (voir réponse précédente)
-            // C'est ici que vous vérifiez que (indexCourant >= 0 && indexCourant < 81) et que
-            // grilleDefense[indexCourant].Tag n'est pas déjà '1'
                 for (int k = 0; k < longueur; k++)
                 {
                     int indexCourant = estVertical ? indexDepart + k * 9 : indexDepart + k;
-                    // 1. Vérification des limites de la grille
+                    // Vérification des limites de la grille
                     if (indexCourant < 0 || indexCourant >= 81) return false;
-                    // 2. Vérification du retour à la ligne (uniquement pour horizontal)
+                    // Vérification du retour à la ligne (uniquement pour horizontal)
                     if (!estVertical && indexDepart / 9 != indexCourant / 9) return false;
-                    // 3. Vérification du chevauchement
+                    // Vérification du chevauchement
                     if (grilleDefense[indexCourant].Tag is 1) return false;
                 }
             return true;
@@ -257,7 +303,7 @@ namespace Bataille_Navale
         // Fonction pour placer le bateau et mettre à jour l'affichage
             private void Placer(Button[] grilleDefense, int indexDepart, int longueur, bool estVertical)
             {
-                int bateauID = numBateau + 1;
+                int bateauID = numBateau + 2;
                 for (int k = 0; k < longueur; k++)
                 {
                     int indexCourant = estVertical ? indexDepart + k * 9 : indexDepart + k;
