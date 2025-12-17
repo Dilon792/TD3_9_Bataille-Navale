@@ -7,12 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="900" d:DesignWidth="1600">
     <Grid>
-        <Button x:Name="butJouer_Solo" Content="" HorizontalAlignment="Left" Margin="229,568,0,0" VerticalAlignment="Top" Height="116" Width="448" FontSize="40" BorderBrush="{x:Null}">
-            <Button.Background>
-                <ImageBrush ImageSource="/But_1J.png"/>
-            </Button.Background>
-        </Button>
-        <Button HorizontalAlignment="Left" Margin="930,568,0,0" VerticalAlignment="Top" Height="116" Width="448" FontSize="40" BorderBrush="{x:Null}">
+
+        <Button x:Name="but2Joueur" HorizontalAlignment="Center" Margin="0,557,0,0" VerticalAlignment="Top" Height="116" Width="448" FontSize="40" BorderBrush="{x:Null}">
             <Button.Background>
                 <ImageBrush Stretch="Fill" ImageSource="images/But_2J.png"/>
             </Button.Background>

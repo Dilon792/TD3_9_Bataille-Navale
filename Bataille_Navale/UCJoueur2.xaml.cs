@@ -36,12 +36,12 @@ namespace Bataille_Navale
             InitialiseGrilleDefense();
         }
 
-        // Ajoutez cette méthode dans UCJoueur2.xaml.cs
         public void DemarrerPlacement()
         {
             // On s'assure que les événements ne sont pas ajoutés deux fois
             for (int i = 0; i < lesBoutonsDefJoueur2.Length; i++)
             {
+                // Décharger les boutons
                 lesBoutonsDefJoueur2[i].Click -= Placement_Click; // Sécurité
                 lesBoutonsDefJoueur2[i].Click += Placement_Click;
             }
@@ -59,6 +59,7 @@ namespace Bataille_Navale
         {
             for (int i = 0; i < lesBoutonsAttJoueur2.Length; i++)
             {
+                // Création des boutons de la grille attaque avec leurs caractéristiques
                 lesBoutonsAttJoueur2[i] = new Button();
                 lesBoutonsAttJoueur2[i].Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/carreaux_normal.png", UriKind.Absolute)));
                 lesBoutonsAttJoueur2[i].Width = 50;
@@ -68,8 +69,8 @@ namespace Bataille_Navale
                 lesBoutonsAttJoueur2[i].Margin = new Thickness(lesBoutonsAttJoueur2[i].Height * (i % 9), lesBoutonsAttJoueur2[i].Width * (i / 9), 0, 0);
                 this.GrilleJoueur2.Children.Add(lesBoutonsAttJoueur2[i]);
                 lesBoutonsAttJoueur2[i].Tag = 1;
+                // ici il est placé dans la 2eme colonne da ma grille
                 Grid.SetColumn(lesBoutonsAttJoueur2[i], 1);
-                // ici il est placé dans la 1ere colonne da ma grille
                 if (MainWindow.nbTour == 2)
                     labReponse.Content = "Placer vos bateau sur la grille de defense";
                 else
@@ -83,14 +84,13 @@ namespace Bataille_Navale
             // On s'assure que les événements ne sont pas ajoutés deux fois
             for (int i = 0; i < lesBoutonsDefJoueur2.Length; i++)
             {
-                lesBoutonsDefJoueur2[i].Click -= Placement_Click; // Sécurité
+                // Décharger les boutons
+                lesBoutonsDefJoueur2[i].Click -= Placement_Click;
                 lesBoutonsDefJoueur2[i].Click += Placement_Click;
             }
-
             // Initialisation du premier bateau
             numBateau = 0;
             labReponse.Content = $"Placez le bateau de longueur {Bateau[numBateau]}.";
-
             // Mettre à jour l'interface pour dire que c'est le placement
             labReponse.Content = "Placez vos bateaux sur la grille de défense";
         }
@@ -107,22 +107,25 @@ namespace Bataille_Navale
                 lesBoutonsDefJoueur2[i].Margin = new Thickness(lesBoutonsDefJoueur2[i].Height * (i % 9), lesBoutonsDefJoueur2[i].Width * (i / 9), 0, 0);
                 this.GrilleJoueur2.Children.Add(lesBoutonsDefJoueur2[i]);
                 lesBoutonsDefJoueur2[i].Tag = 0;
+                // ici il est placé dans la 1ere colonne da ma grille
                 Grid.SetColumn(lesBoutonsDefJoueur2[i], 0);
-                // ici il est placé dans la 2eme colonne da ma grille
             }
         }
 
         private void UnBouton_Click(object sender, RoutedEventArgs e)
         {
+            // Récupération du bouton cliqué
             Button bouton = ((Button)sender);
             for (int i = 0; i < lesBoutonsAttJoueur2.Length; i++)
             {
                 if (bouton == lesBoutonsAttJoueur2[i])
                 {
+                    // Vérifie si la case choisi n'a pas déjà été joué
                     if ((int)bouton.Tag == 1 || (int)bouton.Tag < 0)
                     {
                         labReponse.Content = "Veuiller saisir une case non jouée."; //
                     }
+                    // Vérifie si le tir n'a pas déjà été joué
                     else if (UCJoueur1.nbTir == false)
                     {
                         labReponse.Content = "Vous avez déjà joué. Appuyer sur Suivant.";
@@ -131,6 +134,7 @@ namespace Bataille_Navale
                     {
                         labReponse.Content = "";
                         Verif_Bateau(bouton);
+                        // Enregistre que le tir a été effectué ce tour.
                         UCJoueur1.nbTir = false;
                         butSuivant.Opacity = 1;
                         butSuivant.IsEnabled = true;
@@ -146,30 +150,29 @@ namespace Bataille_Navale
     int index = Array.IndexOf(lesBoutonsAttJoueur2, bouton); 
     int tagBateau = (int)bouton.Tag;
 
-    // --- 1. Gérer le Miss (Eau, Tag=0) ---
+    // Si le tir est ratée
     if (tagBateau == 0) 
     {
         bouton.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/carreaux_raté.png", UriKind.Absolute)));
         bouton.Tag = 1; 
         
-        // *** CORRECTION 2.B.i : Mise à jour de la grille de défense ADVERSE (J1) ***
+        // Mise à jour de la grille du J1
         UCJoueur1.lesBoutonsDefJoueur1[index].Tag = 1; 
         UCJoueur1.lesBoutonsDefJoueur1[index].Background = bouton.Background;
     }
-    // --- 2. Gérer le Hit (Bateau, Tag > 1) ---
+    // Si le tir touche
     else if (tagBateau > 1) 
     {
-        // Hit
         bouton.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/carreaux_toucher.png", UriKind.Absolute)));
         bouton.Tag = -tagBateau; // Marquer comme touché
 
-        // *** CORRECTION 2.B.i : Mise à jour de la grille de défense ADVERSE (J1) ***
+        // Mise à jour de la grille du J1
         UCJoueur1.lesBoutonsDefJoueur1[index].Tag = -tagBateau; 
         UCJoueur1.lesBoutonsDefJoueur1[index].Background = bouton.Background;
 
-        // --- 3. Vérification de la destruction du bateau ---
+        // Vérification de la destruction du bateau
         int caseBateauRestante = 0;
-        // Compter les cases du même bateau qui n'ont pas encore été touchées (Tag == tagBateau) sur la grille de DÉFENSE ADVERSE (J1)
+        // Compter les cases du même bateau qui n'ont pas encore été touchées sur la grille du J1
         for (int i = 0; i < UCJoueur1.lesBoutonsDefJoueur1.Length; i++) 
         {
             if (UCJoueur1.lesBoutonsDefJoueur1[i].Tag is int tag && tag == tagBateau)
@@ -181,7 +184,7 @@ namespace Bataille_Navale
         // Si plus de cases non touchées, le bateau est coulé.
         if (caseBateauRestante == 0)
         {
-            // Mettre à jour TOUTES les cases touchées (-tagBateau) en coulé (1) sur les deux grilles
+            // Mettre à jour toutes les cases touchées en coulé sur les deux grilles
             for (int i = 0; i < lesBoutonsAttJoueur2.Length; i++) 
             {
                 if (lesBoutonsAttJoueur2[i].Tag is int attTag && attTag == -tagBateau)
@@ -198,15 +201,16 @@ namespace Bataille_Navale
         }
     }
 
-    // --- 4. Vérification de la fin de partie (Tour 6 Corrigé) ---
+    // Vérification de la fin de partie
     int nbCasesBateauRestantes = 0;
 
-    // Compter toutes les parties de bateau (Tag > 1 ou Tag < 0) restantes sur la grille de DÉFENSE ADVERSE (J1)
+    // Compter toutes les parties de bateau restantes sur la grille du J1
     for (int i = 0; i < UCJoueur1.lesBoutonsDefJoueur1.Length; i++)
     {
         if (UCJoueur1.lesBoutonsDefJoueur1[i].Tag is int tag)
         {
-            if (tag > 1 || tag < 0) // Si c'est un bateau non coulé
+            // Si c'est un bateau non coulé
+            if (tag > 1 || tag < 0) 
             {
                 nbCasesBateauRestantes++;
             }
@@ -234,7 +238,6 @@ namespace Bataille_Navale
             labReponse.Content = "Orientation changée. Placez le bateau de longueur " + longueur + ".";
         }
 
-        // Dans UCJoueur2.xaml.cs
         private void Placement_Click(object sender, RoutedEventArgs e)
         {
             Button bouton = (Button)sender;
@@ -244,14 +247,13 @@ namespace Bataille_Navale
             // On utilise la fonction de vérification
             if (VerifPlacement(lesBoutonsDefJoueur2, indexDepart, longueur, estVertical))
             {
-                // 1. Placer le bateau (mise à jour du Tag et de la couleur)
+                // Placer le bateau
                 Placer(lesBoutonsDefJoueur2, indexDepart, longueur, estVertical);
-                // 2. Passer au bateau suivant
+                // Passer au bateau suivant
                 numBateau++;
 
                 if (numBateau < Bateau.Length)
                 {
-                    // Bateau suivant
                     labReponse.Content = $"Bateau placé ! Placez le bateau de longueur {Bateau[numBateau]}. (Orientation: {(estVertical ? "Verticale" : "Horizontale")})";
                 }
                 else
@@ -261,7 +263,6 @@ namespace Bataille_Navale
                     for (int i = 0; i < lesBoutonsDefJoueur2.Length; i++)
                     {
                         lesBoutonsDefJoueur2[i].Click -= Placement_Click;
-                        // Optionnel : Retirer la prévisualisation/surlignement de la souris si vous l'ajoutez
                     }
                     butSuivant.Opacity = 1;
                     butSuivant.IsEnabled = true;
@@ -277,19 +278,16 @@ namespace Bataille_Navale
 
         private bool VerifPlacement(Button[] grilleDefense, int indexDepart, int longueur, bool estVertical)
         {
-            // ... Logique de vérification du chevauchement et des limites (voir réponse précédente)
-            // C'est ici que vous vérifiez que (indexCourant >= 0 && indexCourant < 81) et que
-            // grilleDefense[indexCourant].Tag n'est pas déjà '1'
             for (int k = 0; k < longueur; k++)
             {
                 int indexCourant = estVertical ? indexDepart + k * 9 : indexDepart + k;
-                //Vérification des limites de la grille
+                // Vérification des limites de la grille
                 if (indexCourant < 0 || indexCourant >= 81)
                     return false;
-                //Vérification du retour à la ligne (uniquement pour horizontal)
+                // Vérification du retour à la ligne (uniquement pour horizontal)
                 if (!estVertical && indexDepart / 9 != indexCourant / 9)
                     return false;
-                //Vérification du chevauchement
+                // Vérification du chevauchement
                 if (grilleDefense[indexCourant].Tag is 1)
                     return false;
             }
@@ -316,13 +314,12 @@ namespace Bataille_Navale
             enModePlacement = false;
 
             // Retirer le gestionnaire de clic de placement
-            foreach (var bouton in lesBoutonsDefJoueur2) // Utiliser lesBoutonsDefJoueur2 pour UCJoueur2
+            foreach (var bouton in lesBoutonsDefJoueur2)
             {
                 bouton.Click -= Placement_Click;
             }
 
             labReponse.Content = "Tous les bateaux sont placés ! Appuyez sur Suivant.";
-
             // Activer le bouton qui permet de passer au jeu/transition
             butSuivant.Content = "Commencer le Tour";
             butSuivant.Opacity = 1;

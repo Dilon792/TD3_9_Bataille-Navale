@@ -26,6 +26,7 @@ namespace Bataille_Navale
             Gagnant();
         }
 
+        // Adapte le texte selon le gagnant
         private void Gagnant()
         {
             if (UCJoueur1.FinDePartie == true)

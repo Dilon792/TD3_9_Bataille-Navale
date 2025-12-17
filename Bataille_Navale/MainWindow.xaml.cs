@@ -34,7 +34,7 @@ namespace Bataille_Navale
 
             // associe l'écran au conteneur
             ZoneJeu.Content = ucDemarrage;
-            ucDemarrage.butJouer_Solo.Click += AfficherJoueur1;
+            ucDemarrage.but2Joueur.Click += AfficherJoueur1;
         }
 
         private void AfficherJoueur1(object sender, RoutedEventArgs e)
@@ -42,7 +42,7 @@ namespace Bataille_Navale
             nbTour += 1;
             Console.WriteLine(nbTour);
 
-            // Vérification de la victoire de J2 (si la partie s'est terminée au tour précédent)
+            // Vérification de la victoire de J2
             if (UCJoueur2.FinDePartie == true)
             {
                 ZoneJeu.Content = ucEcranFin;
@@ -56,7 +56,7 @@ namespace Bataille_Navale
 
             if (nbTour >= 4) // Phase d'attaque
             {
-                // *** CORRECTION 1.A : Synchroniser J1 Attaque avec J2 Défense ***
+                // Synchroniser J1 Attaque avec J2 Défense
                 for (int i = 0; i < UCJoueur1.lesBoutonsAttJoueur1.Length; i++)
                 {
                     // J1 Attaque prend l'état de J2 Défense
@@ -70,7 +70,7 @@ namespace Bataille_Navale
         {
             
             ZoneJeu.Content = ucTransition;
-            //Supprimer les gestionnaire disponible pour éviter une surcharge
+            // Supprimer les gestionnaire disponible pour éviter une surcharge
             ucTransition.butSuivantTransition.Click -= AfficherJoueur1;
             ucTransition.butSuivantTransition.Click -= AfficherJoueur2;
             if (nbTour%2 == 0)
@@ -84,7 +84,7 @@ namespace Bataille_Navale
             nbTour += 1;
             Console.WriteLine(nbTour);
 
-            // Vérification de la victoire de J1 (si la partie s'est terminée au tour précédent)
+            // Vérification de la victoire de J1
             if (UCJoueur1.FinDePartie == true)
             {
                 ZoneJeu.Content = ucEcranFin;
@@ -100,7 +100,7 @@ namespace Bataille_Navale
             }
             else if (nbTour >= 5) // Phase d'attaque
             {
-                // *** CORRECTION 1.B : Synchroniser J2 Attaque avec J1 Défense ***
+                // Synchroniser J2 Attaque avec J1 Défense
                 for (int i = 0; i < UCJoueur2.lesBoutonsAttJoueur2.Length; i++)
                 {
                     // J2 Attaque prend l'état de J1 Défense
